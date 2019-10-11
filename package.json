@@ -4,7 +4,9 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"start": "npm run build:live",
+		"build": "tsc -p .",
+		"build:live": "nodemon"
 	},
 	"repository": {
 		"type": "git",
@@ -18,5 +20,10 @@
 	"homepage": "https://github.com/quentg77/myExpress#readme",
 	"dependencies": {
 		"@types/node": "^12.7.12"
+	},
+	"devDependencies": {
+		"nodemon": "^1.19.3",
+		"ts-node": "^8.4.1",
+		"typescript": "^3.6.4"
 	}
 }
