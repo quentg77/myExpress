@@ -1,0 +1,22 @@
+{
+	"name": "myexpress",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/quentg77/myExpress.git"
+	},
+	"author": "Quentin GUICHAOUA",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/quentg77/myExpress/issues"
+	},
+	"homepage": "https://github.com/quentg77/myExpress#readme",
+	"dependencies": {
+		"@types/node": "^12.7.12"
+	}
+}
