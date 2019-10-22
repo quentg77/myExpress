@@ -1,7 +1,9 @@
-import { createServer, IncomingMessage, ServerResponse } from 'http'
+import { createServer, IncomingMessage, ServerResponse } from 'http';
+import fs, { readFileSync, readFile, read, fsync } from 'fs';
 
 class Express {
 
+	reg = /{{(.*)\|(.*)}}/
 	private server: any;
 	private routes: any; //Routes;
 
@@ -53,16 +55,29 @@ class Express {
 			res.write(JSON.stringify(item));
 			res.end();
 		}
+
+		const send = (content: string) => {
+			res.write(content);
+			res.end();
+		}
+
 		return {
-			json, ...res
+			...res, send, json
 		}
 		//return Object.assign({}, {json}, res)  Attention à l'ordre
 	}
 
-	render(fileName: string, callback: Function) {
+	render(fileName: string, callback: (err: Error | null, html: string) => void) {
+		const pathName = "pages/" + fileName + ".html.mustache";
 
+		if (!fs.existsSync(pathName)) {
+			callback(new Error(`404 page ${fileName} n'existe pas`), "");
+			return;
+		}
+
+		let fileContent: string = readFileSync(pathName, "utf8");
+		callback(null, fileContent);
 	}
-
 }
 
 export default function () {

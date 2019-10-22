@@ -26,8 +26,13 @@ app.delete('/delete-login', (req: any, res: any) => {
 });
 
 // Render
-app.render('home', (err: any, html: any) => {
-
+app.get('/home', (req: any, res: any) => {
+	app.render('home', (err, html) => {
+		if (err) {
+			res.send(err);
+		}
+		res.send(html);
+	});
 });
 
 app.listen(port, () => {
