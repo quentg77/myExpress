@@ -1,5 +1,5 @@
 import { createServer, IncomingMessage, ServerResponse } from 'http';
-import fs, { readFileSync, readFile, read, fsync } from 'fs';
+import fs, { readFileSync, readFile } from 'fs';
 import * as path from 'path';
 
 export interface MyHttpResponse {
@@ -45,6 +45,8 @@ class Express {
 
 				const route = this.routes[method].find((item: { url: string }) => item.url === url);
 				if (!route) {
+					res.statusCode = 404;
+					res.end();
 					return;
 				}
 
@@ -90,33 +92,33 @@ class Express {
 			this.WWW_DIRECTORY,
 			this.TEMPLATE_PAGE_DIRECTORY,
 			`${fileName}${this.TEMPLATE_EXTENSION}`
-		)
+		);
 
 		console.log(pathName);
 
 		// check if exist
 		if (!fs.existsSync(pathName)) {
-			callback(new Error(`404 Page ${fileName} doesn't exist`), null)
-			return
+			callback(new Error(`404 Page ${fileName} doesn't exist`), null);
+			return;
 		}
 
 		// read data mustache
-		const content = fs.readFileSync(pathName, 'utf-8')
+		const content = fs.readFileSync(pathName, 'utf-8');
 
 		// search by regex and return new string with data
 		const processContent = content.replace(
 			/{{(\w+)( ?[|] ?)?(\w+)?}}/gi,
 			(item: string, ...args: any[]): string => {
-
+				console.log(item)
 				if (!values) {
 					return 'undefined';
 				}
-				
+
 				// get founded mustache
 				const [key, pipe, transform] = args;
 
 				// return new value if exist on our object
-				
+
 				const v = values[key];
 
 				// if not founded
@@ -137,7 +139,7 @@ class Express {
 		)
 
 		// call with new content
-		callback(null, processContent)
+		callback(null, processContent);
 	}
 }
 
