@@ -27,7 +27,7 @@ app.delete('/delete-login', (req: any, res: any) => {
 
 // Render
 app.get('/home', (req: any, res: any) => {
-	app.render('home', (err, html) => {
+	app.render('home', {name: "toto"}, (err, html) => {
 		if (err) {
 			res.send(err);
 		}
